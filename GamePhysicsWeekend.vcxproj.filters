@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="code">
+      <UniqueIdentifier>{0b2988b9-bca4-41e7-9091-4ea717e6e917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\Renderer">
+      <UniqueIdentifier>{4bca7cd9-2d4a-4a5c-9a12-e33d4bccec57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\Math">
+      <UniqueIdentifier>{8d415f0d-e3e0-425c-8174-b422339c44c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\Physics">
+      <UniqueIdentifier>{1aaaefd8-c6fc-4d9e-af5f-1bc2bf647f72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\Physics\Shapes">
+      <UniqueIdentifier>{d83959c8-8ce6-4438-9fc8-e0cd26dd0aef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="code\main.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="code\application.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Fileio.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\DeviceContext.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\model.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\shader.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Shapes.cpp">
+      <Filter>code\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Math\Bounds.cpp">
+      <Filter>code\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Body.cpp">
+      <Filter>code\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Shapes\ShapeBox.cpp">
+      <Filter>code\Physics\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Shapes\ShapeConvex.cpp">
+      <Filter>code\Physics\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Shapes\ShapeSphere.cpp">
+      <Filter>code\Physics\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\FrameBuffer.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\Image.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\SwapChain.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\Pipeline.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\Descriptor.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\Samplers.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\Buffer.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\OffscreenRenderer.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Renderer\Fence.cpp">
+      <Filter>code\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Scene.cpp">
+      <Filter>code</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code\application.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Fileio.h">
+      <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\DeviceContext.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\Vector.h">
+      <Filter>code\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\model.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\shader.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Shapes.h">
+      <Filter>code\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\Quat.h">
+      <Filter>code\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\Matrix.h">
+      <Filter>code\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\Bounds.h">
+      <Filter>code\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Body.h">
+      <Filter>code\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Shapes\ShapeBase.h">
+      <Filter>code\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Shapes\ShapeBox.h">
+      <Filter>code\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Shapes\ShapeConvex.h">
+      <Filter>code\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Shapes\ShapeSphere.h">
+      <Filter>code\Physics\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\FrameBuffer.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\Image.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\SwapChain.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\Pipeline.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\Descriptor.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\Samplers.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\Buffer.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\OffscreenRenderer.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Renderer\Fence.h">
+      <Filter>code\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Scene.h">
+      <Filter>code</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
