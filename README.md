@@ -7,7 +7,7 @@ This is a very basic renderer that is meant to be used in conjuction with the Ga
 Scene.cpp is where you should begin writing the code from the book series.  And sprinkled throughout the rest of the code will be comments:
 
 ```
-// TODO: Insert code here
+// TODO: Add code here
 ```
 
 This is where you would fill in the code snippets from the texts.
