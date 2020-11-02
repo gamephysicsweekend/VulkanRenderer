@@ -1,6 +1,6 @@
 # VulkanRenderer
 
-This is a very basic renderer that is meant to be used in conjuction with the Game Physics In One Weekend book series.
+This is a very basic renderer that is meant to be used in conjuction with the [Game Physics In One Weekend book series](https://gamephysicsweekend.github.io/).
 
 It is currently only targeted for Windows 10 and Visual Studio 2019.
 
@@ -18,12 +18,22 @@ Scene.cpp is where you should begin writing the code from the book series.  And 
 
 This is where you would fill in the code snippets from the texts.
 
-The controls for the renderer are very basic.  Mouse look to rotate the camera around the origin.  Scroll to zoom.  "T" to pause and unpause time.  "R" to reset the scene.  And "Y" to step the simulation by a single frame.
+## Controls
+
+The controls for the renderer are very basic.
+
+```
+Mouse look to rotate the camera around the origin.
+Scroll to zoom.
+"T" to pause and unpause time.
+"R" to reset the scene.
+"Y" to step the simulation by a single frame.
+```
 
 
 ## Vulkan Resources
 
-For resources on Vulkan, I recommend the following:
+Although this "renderer" uses Vulkan, it is not intended as a resource for learning it.  Instead, I recommend the following:
 
 [https://vulkan-tutorial.com/](https://vulkan-tutorial.com/)
 
