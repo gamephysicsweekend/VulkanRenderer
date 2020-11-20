@@ -4,7 +4,7 @@ This is a very basic renderer that is meant to be used in conjuction with the [G
 
 It is currently only targeted for Windows 10 and Visual Studio 2019.
 
-When you get the project to build and run, you should see a small sphere on top of a large sphere.  This is sort of the hello world of the book series.
+When you get the project to build and run, you should see a small sphere on top of a large sphere.  This is the hello world of the book series.
 
 ![Hello World](https://github.com/gamephysicsweekend/VulkanRenderer/blob/main/data/images/helloworld.jpg?raw=true)
 
@@ -25,9 +25,9 @@ The controls for the renderer are very basic.
 ```
 Mouse look to rotate the camera around the origin.
 Scroll to zoom.
-"T" to pause and unpause time.
 "R" to reset the scene.
-"Y" to step the simulation by a single frame.
+"T" to pause and unpause time.
+"Y" to step the simulation by a single frame (only works when the simulation is paused).
 ```
 
 
