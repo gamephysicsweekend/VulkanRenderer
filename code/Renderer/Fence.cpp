@@ -39,7 +39,7 @@ Fence::Wait
 ====================================================
 */
 bool Fence::Wait( DeviceContext * device ) {
-	uint64_t timeoutns = (uint64_t)1e7;
+	uint64_t timeoutns = (uint64_t)1e9;
 	VkResult result = vkWaitForFences( device->m_vkDevice, 1, &m_vkFence, VK_TRUE, timeoutns );
 
 	vkDestroyFence( device->m_vkDevice, m_vkFence, nullptr );
