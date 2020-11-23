@@ -172,10 +172,6 @@ const std::vector< const char * > DeviceContext::m_deviceExtensions = {
 	VK_KHR_GET_MEMORY_REQUIREMENTS_2_EXTENSION_NAME,
 };
 
-const std::vector< const char * > DeviceContext::m_validationLayers = {
-	"VK_LAYER_LUNARG_standard_validation"
-};
-
 /*
 ====================================================
 VulkanErrorMessage
@@ -204,7 +200,27 @@ bool DeviceContext::CreateInstance( bool enableLayers, const std::vector< const 
 	std::vector< const char * > validationLayers;
 	if ( m_enableLayers ) {
 		validationLayers = m_validationLayers;
+
+		uint32_t numLayers;
+		vkEnumerateInstanceLayerProperties( &numLayers, nullptr );
+
+		std::vector< VkLayerProperties > layerProperties( numLayers );
+		vkEnumerateInstanceLayerProperties( &numLayers, layerProperties.data() );
+
+		for ( int i = 0; i < numLayers; i++ ) {
+			printf( "Layer: %i %s\n", i, layerProperties[ i ].layerName );
+
+			if ( 0 == strcmp( "VK_LAYER_KHRONOS_validation", layerProperties[ i ].layerName ) ) {
+				validationLayers.clear();
+				validationLayers.push_back( "VK_LAYER_KHRONOS_validation" );
+				break;
+			}
+			if ( 0 == strcmp( "VK_LAYER_LUNARG_standard_validation", layerProperties[ i ].layerName ) ) {
+				validationLayers.push_back( "VK_LAYER_LUNARG_standard_validation" );
+			}
+		}
 	}
+	m_validationLayers = validationLayers;
 
 	//
 	//	Vulkan Instance

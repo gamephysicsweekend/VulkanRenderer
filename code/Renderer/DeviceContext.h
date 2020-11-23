@@ -77,7 +77,7 @@ public:
 	uint32_t FindMemoryTypeIndex( uint32_t typeFilter, VkMemoryPropertyFlags properties );
 
 	static const std::vector< const char * > m_deviceExtensions;
-	static const std::vector< const char * > m_validationLayers;
+	std::vector< const char * > m_validationLayers;
 
 	//
 	//	Command Buffers
