@@ -215,7 +215,7 @@ bool Application::InitializeVulkan() {
 	//
 	//	Uniform Buffer
 	//
-	m_uniformBuffer.Allocate( &m_deviceContext, NULL, sizeof( float ) * 16 * 128, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT );
+	m_uniformBuffer.Allocate( &m_deviceContext, NULL, sizeof( float ) * 16 * 4 * 128, VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT );
 
 	//
 	//	Offscreen rendering
@@ -525,6 +525,8 @@ void Application::UpdateUniforms() {
 	struct camera_t {
 		Mat4 matView;
 		Mat4 matProj;
+		Mat4 pad0;
+		Mat4 pad1;
 	};
 	camera_t camera;
 
@@ -635,7 +637,7 @@ void Application::UpdateUniforms() {
 			renderModel.orient = body.m_orientation;
 			m_renderModels.push_back( renderModel );
 
-			uboByteOffset += sizeof( matOrient );
+			uboByteOffset += 256;//sizeof( matOrient );
 		}
 
 		m_uniformBuffer.UnmapBuffer( &m_deviceContext );
@@ -671,7 +673,7 @@ void Application::DrawFrame() {
 
 		// Descriptor is how we bind our buffers and images
 		Descriptor descriptor = m_copyPipeline.GetFreeDescriptor();
-		descriptor.BindImage( VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, g_offscreenFrameBuffer.m_imageColor.m_vkImageView, Samplers::m_samplerStandard, 0 );
+		descriptor.BindImage( VK_IMAGE_LAYOUT_GENERAL, g_offscreenFrameBuffer.m_imageColor.m_vkImageView, Samplers::m_samplerStandard, 0 );
 		descriptor.BindDescriptor( &m_deviceContext, cmdBuffer, &m_copyPipeline );
 		m_modelFullScreen.DrawIndexed( cmdBuffer );
 	}

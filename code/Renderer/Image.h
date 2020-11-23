@@ -26,6 +26,7 @@ public:
 	bool Create( DeviceContext * device, const CreateParms_t & parms );
 	void Cleanup( DeviceContext * device );
 	void TransitionLayout( DeviceContext * device );
+	void TransitionLayout( VkCommandBuffer cmdBuffer, VkImageLayout newLayout );
 
 	CreateParms_t	m_parms;
 	VkImage			m_vkImage;

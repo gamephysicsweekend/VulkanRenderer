@@ -217,7 +217,7 @@ void DrawOffscreen( DeviceContext * device, int cmdBufferIndex, Buffer * uniform
 	VkCommandBuffer cmdBuffer = device->m_vkCommandBuffers[ cmdBufferIndex ];
 
 	const int camOffset = 0;
-	const int camSize = sizeof( float ) * 16 * 2;
+	const int camSize = sizeof( float ) * 16 * 4;
 
 	const int shadowCamOffset = camOffset + camSize;
 	const int shadowCamSize = camSize;
@@ -226,6 +226,8 @@ void DrawOffscreen( DeviceContext * device, int cmdBufferIndex, Buffer * uniform
 	//	Update the Shadows
 	//
 	{
+		g_shadowFrameBuffer.m_imageDepth.TransitionLayout( cmdBuffer, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL );
+
 		g_shadowFrameBuffer.BeginRenderPass( device, cmdBufferIndex );
 
 		// Binding the pipeline is effectively the "use shader" we had back in our opengl apps
@@ -242,12 +244,16 @@ void DrawOffscreen( DeviceContext * device, int cmdBufferIndex, Buffer * uniform
 		}
 
 		g_shadowFrameBuffer.EndRenderPass( device, cmdBufferIndex );
+
+		g_shadowFrameBuffer.m_imageDepth.TransitionLayout( cmdBuffer, VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL );
 	}
 
 	//
 	//	Draw the World
 	//
 	{
+		g_offscreenFrameBuffer.m_imageColor.TransitionLayout( cmdBuffer, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL );
+
 		g_offscreenFrameBuffer.BeginRenderPass( device, cmdBufferIndex );
 
 		//
@@ -278,12 +284,14 @@ void DrawOffscreen( DeviceContext * device, int cmdBufferIndex, Buffer * uniform
 				descriptor.BindBuffer( uniforms, camOffset, camSize, 0 );									// bind the camera matrices
 				descriptor.BindBuffer( uniforms, renderModel.uboByteOffset, renderModel.uboByteSize, 1 );	// bind the model matrices
 				descriptor.BindBuffer( uniforms, shadowCamOffset, shadowCamSize, 2 );						// bind the camera matrices
-				descriptor.BindImage( VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, g_shadowFrameBuffer.m_imageDepth.m_vkImageView, Samplers::m_samplerStandard, 0 );
+				descriptor.BindImage( VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL, g_shadowFrameBuffer.m_imageDepth.m_vkImageView, Samplers::m_samplerStandard, 0 );
 				descriptor.BindDescriptor( device, cmdBuffer, &g_checkerboardShadowPipeline );
 				renderModel.model->DrawIndexed( cmdBuffer );
 			}
 		}
 
 		g_offscreenFrameBuffer.EndRenderPass( device, cmdBufferIndex );
+
+		g_offscreenFrameBuffer.m_imageColor.TransitionLayout( cmdBuffer, VK_IMAGE_LAYOUT_GENERAL );		
 	}
 }

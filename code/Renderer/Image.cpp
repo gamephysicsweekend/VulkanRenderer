@@ -181,3 +181,51 @@ void Image::TransitionLayout( DeviceContext * device ) {
 
 	m_vkImageLayout = VK_IMAGE_LAYOUT_GENERAL;
 }
+
+/*
+====================================================
+Image::TransitionLayout
+====================================================
+*/
+void Image::TransitionLayout( VkCommandBuffer cmdBuffer, VkImageLayout newLayout ) {
+	if ( m_vkImageLayout == newLayout ) {
+		return;
+	}
+
+	VkImageMemoryBarrier barrier = {};
+	barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+	barrier.oldLayout = m_vkImageLayout;
+	barrier.newLayout = newLayout;
+	barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+	barrier.image = m_vkImage;
+	if ( VK_FORMAT_D32_SFLOAT == m_parms.format ) {
+		barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+	} else {
+		barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+	}
+	barrier.subresourceRange.baseMipLevel = 0;
+	barrier.subresourceRange.levelCount = 1;
+	barrier.subresourceRange.baseArrayLayer = 0;
+	barrier.subresourceRange.layerCount = 1;
+	barrier.srcAccessMask = 0;
+	barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+
+	VkPipelineStageFlags sourceStage = VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT;
+	VkPipelineStageFlags destinationStage = VK_PIPELINE_STAGE_TRANSFER_BIT;				
+
+	vkCmdPipelineBarrier(
+		cmdBuffer,
+		sourceStage,
+		destinationStage,
+		0,
+		0,
+		nullptr,
+		0,
+		nullptr,
+		1,
+		&barrier
+	);
+
+	m_vkImageLayout = newLayout;
+}
