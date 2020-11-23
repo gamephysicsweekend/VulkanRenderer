@@ -665,7 +665,7 @@ void Application::DrawFrame() {
 	//
  	m_deviceContext.BeginRenderPass();
 	{
-		extern FrameBuffer	g_offscreenFrameBuffer;;
+		extern FrameBuffer g_offscreenFrameBuffer;
 		VkCommandBuffer cmdBuffer = m_deviceContext.m_vkCommandBuffers[ imageIndex ];
 
 		// Binding the pipeline is effectively the "use shader" we had back in our opengl apps
