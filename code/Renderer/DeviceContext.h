@@ -102,4 +102,7 @@ public:
 
 	void BeginRenderPass() { m_swapChain.BeginRenderPass( this ); }
 	void EndRenderPass() { m_swapChain.EndRenderPass( this ); }
+
+
+	int GetAligendUniformByteOffset( const int offset ) const;
 };

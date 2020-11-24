@@ -219,7 +219,7 @@ void DrawOffscreen( DeviceContext * device, int cmdBufferIndex, Buffer * uniform
 	const int camOffset = 0;
 	const int camSize = sizeof( float ) * 16 * 4;
 
-	const int shadowCamOffset = camOffset + camSize;
+	const int shadowCamOffset = device->GetAligendUniformByteOffset( camOffset + camSize );
 	const int shadowCamSize = camSize;
 
 	//
@@ -283,7 +283,7 @@ void DrawOffscreen( DeviceContext * device, int cmdBufferIndex, Buffer * uniform
 				Descriptor descriptor = g_checkerboardShadowPipeline.GetFreeDescriptor();
 				descriptor.BindBuffer( uniforms, camOffset, camSize, 0 );									// bind the camera matrices
 				descriptor.BindBuffer( uniforms, renderModel.uboByteOffset, renderModel.uboByteSize, 1 );	// bind the model matrices
-				descriptor.BindBuffer( uniforms, shadowCamOffset, shadowCamSize, 2 );						// bind the camera matrices
+				descriptor.BindBuffer( uniforms, shadowCamOffset, shadowCamSize, 2 );						// bind the shadow camera matrices
 				descriptor.BindImage( VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL, g_shadowFrameBuffer.m_imageDepth.m_vkImageView, Samplers::m_samplerStandard, 0 );
 				descriptor.BindDescriptor( device, cmdBuffer, &g_checkerboardShadowPipeline );
 				renderModel.model->DrawIndexed( cmdBuffer );

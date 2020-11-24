@@ -573,7 +573,7 @@ void Application::UpdateUniforms() {
 			cameraByteOFfset = uboByteOffset;
 
 			// update offset into the buffer
-			uboByteOffset += sizeof( camera );
+			uboByteOffset += m_deviceContext.GetAligendUniformByteOffset( sizeof( camera ) );
 		}
 
 		//
@@ -610,7 +610,7 @@ void Application::UpdateUniforms() {
 			shadowByteOffset = uboByteOffset;
 
 			// update offset into the buffer
-			uboByteOffset += sizeof( camera );
+			uboByteOffset += m_deviceContext.GetAligendUniformByteOffset( sizeof( camera ) );
 		}
 
 		//
@@ -637,7 +637,7 @@ void Application::UpdateUniforms() {
 			renderModel.orient = body.m_orientation;
 			m_renderModels.push_back( renderModel );
 
-			uboByteOffset += 256;//sizeof( matOrient );
+			uboByteOffset += m_deviceContext.GetAligendUniformByteOffset( sizeof( matOrient ) );
 		}
 
 		m_uniformBuffer.UnmapBuffer( &m_deviceContext );

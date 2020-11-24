@@ -636,3 +636,19 @@ void DeviceContext::FlushCommandBuffer( VkCommandBuffer commandBuffer, VkQueue q
 
 	vkFreeCommandBuffers( m_vkDevice, m_vkCommandPool, 1, &commandBuffer );
 }
+
+/*
+====================================================
+DeviceContext::GetAligendUniformByteOffset
+Devices have a minimum byte alignment for their offsets.
+This function converts the incoming byte offset to a proper byte alignment.
+====================================================
+*/
+int DeviceContext::GetAligendUniformByteOffset( const int offset ) const {
+	const PhysicalDeviceProperties & deviceProperties = m_physicalDevices[ m_deviceIndex ];
+	const int minByteOffsetAlignment = deviceProperties.m_vkDeviceProperties.limits.minUniformBufferOffsetAlignment;
+
+	const int n = ( offset + minByteOffsetAlignment - 1 ) / minByteOffsetAlignment;
+	const int alignedOffset = n * minByteOffsetAlignment;
+	return alignedOffset;
+}
