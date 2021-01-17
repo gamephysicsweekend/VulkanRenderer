@@ -2,6 +2,9 @@
 //  Scene.cpp
 //
 #include "Scene.h"
+#include "Physics/Contact.h"
+#include "Physics/Intersections.h"
+#include "Physics/Broadphase.h"
 
 /*
 ========================================================================================================

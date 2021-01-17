@@ -16,6 +16,9 @@
     <Filter Include="code\Physics\Shapes">
       <UniqueIdentifier>{d83959c8-8ce6-4438-9fc8-e0cd26dd0aef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="code\Physics\Constraints">
+      <UniqueIdentifier>{2305611d-ec70-4b22-952a-04699c9ff7d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp">
@@ -83,6 +86,48 @@
     </ClCompile>
     <ClCompile Include="code\Scene.cpp">
       <Filter>code</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Math\LCP.cpp">
+      <Filter>code\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints\ConstraintConstantVelocity.cpp">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints\ConstraintDistance.cpp">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints\ConstraintHinge.cpp">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints\ConstraintMotor.cpp">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints\ConstraintOrientation.cpp">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints\ConstraintPenetration.cpp">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints\ConstraintMover.cpp">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Constraints.cpp">
+      <Filter>code\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Broadphase.cpp">
+      <Filter>code\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Contact.cpp">
+      <Filter>code\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\GJK.cpp">
+      <Filter>code\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Intersections.cpp">
+      <Filter>code\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Physics\Manifold.cpp">
+      <Filter>code\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +205,51 @@
     </ClInclude>
     <ClInclude Include="code\Scene.h">
       <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Math\LCP.h">
+      <Filter>code\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintBase.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintConstantVelocity.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintDistance.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintHinge.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintMotor.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintOrientation.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintPenetration.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints\ConstraintMover.h">
+      <Filter>code\Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Constraints.h">
+      <Filter>code\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Broadphase.h">
+      <Filter>code\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Contact.h">
+      <Filter>code\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\GJK.h">
+      <Filter>code\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Intersections.h">
+      <Filter>code\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Physics\Manifold.h">
+      <Filter>code\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
