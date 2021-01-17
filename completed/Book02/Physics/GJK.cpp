@@ -3,6 +3,19 @@
 //
 #include "GJK.h"
 
+/*
+================================================================================================
+
+Signed Volumes
+
+================================================================================================
+*/
+
+/*
+================================
+SignedVolume1D
+================================
+*/
 Vec2 SignedVolume1D( const Vec3 & s1, const Vec3 & s2 ) {
 	Vec3 ab = s2 - s1;	// Ray from a to b
 	Vec3 ap = Vec3( 0.0f ) - s1;	// Ray from a to origin
@@ -45,11 +58,11 @@ Vec2 SignedVolume1D( const Vec3 & s1, const Vec3 & s2 ) {
 	return Vec2( 0.0f, 1.0f );
 }
 
-
-
-
-
-
+/*
+================================
+CompareSigns
+================================
+*/
 int CompareSigns( float a, float b ) {
 	if ( a > 0.0f && b > 0.0f ) {
 		return 1;
@@ -60,6 +73,11 @@ int CompareSigns( float a, float b ) {
 	return 0;
 }
 
+/*
+================================
+SignedVolume2D
+================================
+*/
 Vec3 SignedVolume2D( const Vec3 & s1, const Vec3 & s2, const Vec3 & s3 ) {
 	Vec3 normal = ( s2 - s1 ).Cross( s3 - s1 );
 	Vec3 p0 = normal * s1.Dot( normal ) / normal.GetLengthSqr();
@@ -139,6 +157,11 @@ Vec3 SignedVolume2D( const Vec3 & s1, const Vec3 & s2, const Vec3 & s3 ) {
 	return lambdas;
 }
 
+/*
+================================
+SignedVolume3D
+================================
+*/
 Vec4 SignedVolume3D( const Vec3 & s1, const Vec3 & s2, const Vec3 & s3, const Vec3 & s4 ) {
 	Mat4 M;
 	M.rows[ 0 ] = Vec4( s1.x, s2.x, s3.x, s4.x );
@@ -187,6 +210,11 @@ Vec4 SignedVolume3D( const Vec3 & s1, const Vec3 & s2, const Vec3 & s3, const Ve
 	return lambdas;
 }
 
+/*
+================================
+TestSignedVolumeProjection
+================================
+*/
 void TestSignedVolumeProjection() {
 	const Vec3 orgPts[ 4 ] = {
 		Vec3( 0, 0, 0 ),
@@ -265,19 +293,13 @@ void TestSignedVolumeProjection() {
 	);
 }
 
+/*
+================================================================================================
 
+Gilber Johnson Keerthi
 
-
-
-
-
-
-
-
-
-
-
-
+================================================================================================
+*/
 
 struct point_t {
 	Vec3 xyz;	// The point on the minkowski sum
@@ -298,6 +320,11 @@ struct point_t {
 	}
 };
 
+/*
+================================
+Support
+================================
+*/
 point_t Support( const Body * bodyA, const Body * bodyB, Vec3 dir, const float bias ) {
 	dir.Normalize();
 
@@ -315,19 +342,6 @@ point_t Support( const Body * bodyA, const Body * bodyB, Vec3 dir, const float b
 	point.xyz = point.ptA - point.ptB;
 	return point;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 ================================
@@ -666,44 +680,13 @@ bool GJK_DoesIntersect( const Body * bodyA, const Body * bodyB, const float bias
 	return true;
 }
 
+/*
+================================================================================================
 
+Expanding Polytope Algorithm
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+================================================================================================
+*/
 
 /*
 ================================

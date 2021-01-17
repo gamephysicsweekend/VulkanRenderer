@@ -3,6 +3,11 @@
 //
 #include "ConstraintDistance.h"
 
+/*
+================================
+ConstraintDistance::PreSolve
+================================
+*/
 void ConstraintDistance::PreSolve( const float dt_sec ) {
 	// Get the world space position of the hinge from A's orientation
 	const Vec3 worldAnchorA = m_bodyA->BodySpaceToWorldSpace( m_anchorA );
@@ -53,6 +58,11 @@ void ConstraintDistance::PreSolve( const float dt_sec ) {
 	m_baumgarte = ( Beta / dt_sec ) * C;
 }
 
+/*
+================================
+ConstraintDistance::Solve
+================================
+*/
 void ConstraintDistance::Solve() {
 	const MatMN JacobianTranspose = m_Jacobian.Transpose();
 
@@ -74,6 +84,11 @@ void ConstraintDistance::Solve() {
 	m_cachedLambda += lambdaN;
 }
 
+/*
+================================
+ConstraintDistance::PostSolve
+================================
+*/
 void ConstraintDistance::PostSolve() {
 	// Limit the warm starting to reasonable limits
 	if ( m_cachedLambda[ 0 ] * 0.0f != m_cachedLambda[ 0 ] * 0.0f ) {

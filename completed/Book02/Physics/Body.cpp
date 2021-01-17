@@ -15,17 +15,32 @@ m_shape( NULL ) {
 	m_linearVelocity.Zero();
 }
 
+/*
+====================================================
+Body::GetCenterOfMassWorldSpace
+====================================================
+*/
 Vec3 Body::GetCenterOfMassWorldSpace() const {
 	const Vec3 centerOfMass = m_shape->GetCenterOfMass();
 	const Vec3 pos = m_position + m_orientation.RotatePoint( centerOfMass );
 	return pos;
 }
 
+/*
+====================================================
+Body::GetCenterOfMassModelSpace
+====================================================
+*/
 Vec3 Body::GetCenterOfMassModelSpace() const {
 	const Vec3 centerOfMass = m_shape->GetCenterOfMass();
 	return centerOfMass;
 }
 
+/*
+====================================================
+Body::WorldSpaceToBodySpace
+====================================================
+*/
 Vec3 Body::WorldSpaceToBodySpace( const Vec3 & worldPt ) const {
 	Vec3 tmp			= worldPt - GetCenterOfMassWorldSpace();
 	Quat inverseOrient	= m_orientation.Inverse();
@@ -33,17 +48,32 @@ Vec3 Body::WorldSpaceToBodySpace( const Vec3 & worldPt ) const {
 	return bodySpace;
 }
 
+/*
+====================================================
+Body::BodySpaceToWorldSpace
+====================================================
+*/
 Vec3 Body::BodySpaceToWorldSpace( const Vec3 & worldPt ) const {
 	Vec3 worldSpace = GetCenterOfMassWorldSpace() + m_orientation.RotatePoint( worldPt );
 	return worldSpace;
 }
 
+/*
+====================================================
+Body::GetInverseInertiaTensorBodySpace
+====================================================
+*/
 Mat3 Body::GetInverseInertiaTensorBodySpace() const {
 	Mat3 inertiaTensor		= m_shape->InertiaTensor();
 	Mat3 invInertiaTensor	= inertiaTensor.Inverse() * m_invMass;
 	return invInertiaTensor;
 }
 
+/*
+====================================================
+Body::GetInverseInertiaTensorWorldSpace
+====================================================
+*/
 Mat3 Body::GetInverseInertiaTensorWorldSpace() const {
 	Mat3 inertiaTensor		= m_shape->InertiaTensor();
 	Mat3 invInertiaTensor	= inertiaTensor.Inverse() * m_invMass;
@@ -52,6 +82,11 @@ Mat3 Body::GetInverseInertiaTensorWorldSpace() const {
 	return invInertiaTensor;
 }
 
+/*
+====================================================
+Body::ApplyImpulse
+====================================================
+*/
 void Body::ApplyImpulse( const Vec3 & impulsePoint, const Vec3 & impulse ) {
 	if ( 0.0f == m_invMass ) {
 		return;
@@ -67,6 +102,11 @@ void Body::ApplyImpulse( const Vec3 & impulsePoint, const Vec3 & impulse ) {
 	ApplyImpulseAngular( dL );
 }
 
+/*
+====================================================
+Body::ApplyImpulseLinear
+====================================================
+*/
 void Body::ApplyImpulseLinear( const Vec3 & impulse ) {
 	if ( 0.0f == m_invMass ) {
 		return;
@@ -78,6 +118,11 @@ void Body::ApplyImpulseLinear( const Vec3 & impulse ) {
 	m_linearVelocity += impulse * m_invMass;
 }
 
+/*
+====================================================
+Body::ApplyImpulseAngular
+====================================================
+*/
 void Body::ApplyImpulseAngular( const Vec3 & impulse ) {
 	if ( 0.0f == m_invMass ) {
 		return;
@@ -95,7 +140,11 @@ void Body::ApplyImpulseAngular( const Vec3 & impulse ) {
 	}
 }
 
-
+/*
+====================================================
+Body::Update
+====================================================
+*/
 void Body::Update( const float dt_sec ) {
 	m_position += m_linearVelocity * dt_sec;
 

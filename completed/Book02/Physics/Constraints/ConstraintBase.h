@@ -40,6 +40,11 @@ public:
 	Vec3 m_axisB;		// The axis direction in bodyB's space
 };
 
+/*
+====================================================
+Constraint::GetInverseMassMatrix
+====================================================
+*/
 inline MatMN Constraint::GetInverseMassMatrix() const {
 	MatMN invMassMatrix( 12, 12 );
 	invMassMatrix.Zero();
@@ -69,6 +74,11 @@ inline MatMN Constraint::GetInverseMassMatrix() const {
 	return invMassMatrix;
 }
 
+/*
+====================================================
+Constraint::GetVelocities
+====================================================
+*/
 inline VecN Constraint::GetVelocities() const {
 	VecN q_dt( 12 );
 
@@ -91,6 +101,11 @@ inline VecN Constraint::GetVelocities() const {
 	return q_dt;
 }
 
+/*
+====================================================
+Constraint::ApplyImpulses
+====================================================
+*/
 inline void Constraint::ApplyImpulses( const VecN & impulses ) {
 	Vec3 forceInternalA( 0.0f );
 	Vec3 torqueInternalA( 0.0f );
@@ -120,6 +135,11 @@ inline void Constraint::ApplyImpulses( const VecN & impulses ) {
 	m_bodyB->ApplyImpulseAngular( torqueInternalB );
 }
 
+/*
+====================================================
+Constraint::Left
+====================================================
+*/
 inline Mat4 Constraint::Left( const Quat & q ) {
 	Mat4 L;
 	L.rows[ 0 ] = Vec4( q.w, -q.x, -q.y, -q.z );
@@ -129,6 +149,11 @@ inline Mat4 Constraint::Left( const Quat & q ) {
 	return L.Transpose();
 }
 
+/*
+====================================================
+Constraint::Right
+====================================================
+*/
 inline Mat4 Constraint::Right( const Quat & q ) {
 	Mat4 R;
 	R.rows[ 0 ] = Vec4( q.w, -q.x, -q.y, -q.z );

@@ -3,7 +3,6 @@
 //
 #include "ConstraintMotor.h"
 
-
 /*
 ================================
 ConstraintMotor::PreSolve

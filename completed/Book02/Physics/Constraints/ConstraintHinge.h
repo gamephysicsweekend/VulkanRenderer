@@ -4,6 +4,11 @@
 #pragma once
 #include "ConstraintBase.h"
 
+/*
+================================
+ConstraintHingeQuat
+================================
+*/
 class ConstraintHingeQuat : public Constraint {
 public:
 	ConstraintHingeQuat() : Constraint(), m_cachedLambda( 3 ), m_Jacobian( 3, 12 ) {
@@ -22,11 +27,11 @@ public:
 	float m_baumgarte;
 };
 
-
-
-
-
-
+/*
+================================
+ConstraintHingeQuatLimited
+================================
+*/
 class ConstraintHingeQuatLimited : public Constraint {
 public:
 	ConstraintHingeQuatLimited() : Constraint(), m_cachedLambda( 4 ), m_Jacobian( 4, 12 ) {

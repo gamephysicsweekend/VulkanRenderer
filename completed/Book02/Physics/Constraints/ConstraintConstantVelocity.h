@@ -4,6 +4,11 @@
 #pragma once
 #include "ConstraintBase.h"
 
+/*
+================================
+ConstraintConstantVelocity
+================================
+*/
 class ConstraintConstantVelocity : public Constraint {
 public:
 	ConstraintConstantVelocity() : Constraint(), m_cachedLambda( 2 ), m_Jacobian( 2, 12 ) {
@@ -22,10 +27,11 @@ public:
 	float m_baumgarte;
 };
 
-
-
-
-
+/*
+================================
+ConstraintConstantVelocityLimited
+================================
+*/
 class ConstraintConstantVelocityLimited : public Constraint {
 public:
 	ConstraintConstantVelocityLimited() : Constraint(), m_cachedLambda( 4 ), m_Jacobian( 4, 12 ) {

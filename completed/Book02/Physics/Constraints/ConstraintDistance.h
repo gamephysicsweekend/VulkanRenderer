@@ -4,6 +4,11 @@
 #pragma once
 #include "ConstraintBase.h"
 
+/*
+================================
+ConstraintHingeQuat
+================================
+*/
 class ConstraintDistance : public Constraint {
 public:
 	ConstraintDistance() : Constraint(),

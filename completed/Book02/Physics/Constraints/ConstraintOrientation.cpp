@@ -3,7 +3,6 @@
 //
 #include "ConstraintOrientation.h"
 
-
 /*
 ================================
 ConstraintOrientation::PreSolve
