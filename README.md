@@ -42,3 +42,8 @@ Although this "renderer" uses Vulkan, it is not intended as a resource for learn
 [https://github.com/SaschaWillems/Vulkan](https://github.com/SaschaWillems/Vulkan)
 
 [https://www.lunarg.com/vulkan-sdk/](https://www.lunarg.com/vulkan-sdk/)
+
+[https://vkguide.dev/](https://vkguide.dev/)
+
+[https://zeux.io/2020/02/27/writing-an-efficient-vulkan-renderer/](https://zeux.io/2020/02/27/writing-an-efficient-vulkan-renderer/)
+
