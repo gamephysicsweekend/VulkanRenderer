@@ -8,7 +8,9 @@
 #include "../Physics/Shapes.h"
 #include <algorithm>
 
-#pragma warning( disable : 4996 )
+#if defined( _MSC_VER )
+	#pragma warning( disable : 4996 )
+#endif
 
 /*
 ====================================================
@@ -360,7 +362,7 @@ void FillSphere( Model & model, const float radius ) {
 	FillCubeTessellated( model, (int)s );
 
 	// Project the tessellated cube onto a sphere
-	for ( int i = 0; i < model.m_vertices.size(); i++ ) {
+	for ( size_t i = 0; i < model.m_vertices.size(); i++ ) {
 		Vec3 xyz = model.m_vertices[ i ].xyz;
 		xyz.Normalize();
 
@@ -404,7 +406,7 @@ bool Model::BuildFromShape( const Shape * shape ) {
 		FillCubeTessellated( *this, 0 );
 		Vec3 halfdim = ( shapeBox->m_bounds.maxs - shapeBox->m_bounds.mins ) * 0.5f;
 		Vec3 center = ( shapeBox->m_bounds.maxs + shapeBox->m_bounds.mins ) * 0.5f;
-		for ( int v = 0; v < m_vertices.size(); v++ ) {
+		for ( size_t v = 0; v < m_vertices.size(); v++ ) {
 			for ( int i = 0; i < 3; i++ ) {
 				m_vertices[ v ].xyz[ i ] *= halfdim[ i ];
 				m_vertices[ v ].xyz[ i ] += center[ i ];
@@ -417,7 +419,7 @@ bool Model::BuildFromShape( const Shape * shape ) {
 		m_indices.clear();
 
 		FillSphere( *this, shapeSphere->m_radius );
-		for ( int v = 0; v < m_vertices.size(); v++ ) {
+		for ( size_t v = 0; v < m_vertices.size(); v++ ) {
 			for ( int i = 0; i < 3; i++ ) {
 				m_vertices[ v ].xyz[ i ] *= shapeSphere->m_radius;
 			}
@@ -436,10 +438,10 @@ bool Model::BuildFromShape( const Shape * shape ) {
 		// Calculate smoothed normals
 		std::vector< Vec3 > normals;
 		normals.reserve( hullPts.size() );
-		for ( int i = 0; i < hullPts.size(); i++ ) {
+		for ( int i = 0; i < (int)hullPts.size(); i++ ) {
 			Vec3 norm( 0.0f );
 
-			for ( int t = 0; t < hullTris.size(); t++ ) {
+			for ( size_t t = 0; t < hullTris.size(); t++ ) {
 				const tri_t & tri = hullTris[ t ];
 				if ( i != tri.a && i != tri.b && i != tri.c ) {
 					continue;
@@ -459,7 +461,7 @@ bool Model::BuildFromShape( const Shape * shape ) {
 		}
 
 		m_vertices.reserve( hullPts.size() );
-		for ( int i = 0; i < hullPts.size(); i++ ) {
+		for ( int i = 0; i < (int)hullPts.size(); i++ ) {
 			vert_t vert;
 			memset( &vert, 0, sizeof( vert_t ) );
 			
@@ -479,7 +481,7 @@ bool Model::BuildFromShape( const Shape * shape ) {
 		}
 
 		m_indices.reserve( hullTris.size() * 3 );
-		for ( int i = 0; i < hullTris.size(); i++ ) {
+		for ( int i = 0; i < (int)hullTris.size(); i++ ) {
 			m_indices.push_back( hullTris[ i ].a );
 			m_indices.push_back( hullTris[ i ].b );
 			m_indices.push_back( hullTris[ i ].c );
@@ -495,8 +497,6 @@ Model::MakeVBO
 ================================
 */
 bool Model::MakeVBO( DeviceContext * device ) {
-	VkCommandBuffer vkCommandBuffer = device->m_vkCommandBuffers[ 0 ];
-
 	int bufferSize;
 
 	// Create Vertex Buffer

@@ -4,6 +4,8 @@
 #include "DeviceContext.h"
 #include "Fence.h"
 #include <assert.h>
+#include <stdio.h>
+#include <string.h>
 
 /*
 ================================================================================================
@@ -145,7 +147,7 @@ bool PhysicalDeviceProperties::HasExtensions( const char ** extensions, const in
 		const char * extension = extensions[ i ];
 
 		bool doesExist = false;
-		for ( int j = 0; j < m_vkExtensionProperties.size(); j++ ) {
+		for ( size_t j = 0; j < m_vkExtensionProperties.size(); j++ ) {
 			if ( 0 == strcmp( extension, m_vkExtensionProperties[ j ].extensionName ) ) {
 				doesExist = true;
 				break;
@@ -207,7 +209,7 @@ bool DeviceContext::CreateInstance( bool enableLayers, const std::vector< const 
 		std::vector< VkLayerProperties > layerProperties( numLayers );
 		vkEnumerateInstanceLayerProperties( &numLayers, layerProperties.data() );
 
-		for ( int i = 0; i < numLayers; i++ ) {
+		for ( uint32_t i = 0; i < numLayers; i++ ) {
 			printf( "Layer: %i %s\n", i, layerProperties[ i ].layerName );
 
 			if ( 0 == strcmp( "VK_LAYER_KHRONOS_validation", layerProperties[ i ].layerName ) ) {
@@ -368,7 +370,7 @@ bool DeviceContext::CreatePhysicalDevice() {
 	//
 	//	Select a physical device
 	//
-	for ( int i = 0; i < m_physicalDevices.size(); i++ ) {
+	for ( size_t i = 0; i < m_physicalDevices.size(); i++ ) {
 		const PhysicalDeviceProperties & deviceProperties = m_physicalDevices[ i ];
 
 		// Ignore non-drawing devices
@@ -388,7 +390,7 @@ bool DeviceContext::CreatePhysicalDevice() {
 		//	Find graphics queue family
 		//
 		int graphicsIdx = -1;
-		for ( int j = 0; j < deviceProperties.m_vkQueueFamilyProperties.size(); ++j ) {
+		for ( size_t j = 0; j < deviceProperties.m_vkQueueFamilyProperties.size(); ++j ) {
 			const VkQueueFamilyProperties & props = deviceProperties.m_vkQueueFamilyProperties[ j ];
 
 			if ( props.queueCount == 0 ) {
@@ -410,7 +412,7 @@ bool DeviceContext::CreatePhysicalDevice() {
 		//	Find present queue family
 		//
 		int presentIdx = -1;
-		for ( int j = 0; j < deviceProperties.m_vkQueueFamilyProperties.size(); ++j ) {
+		for ( size_t j = 0; j < deviceProperties.m_vkQueueFamilyProperties.size(); ++j ) {
 			const VkQueueFamilyProperties & props = deviceProperties.m_vkQueueFamilyProperties[ j ];
 
 			if ( props.queueCount == 0 ) {

@@ -12,8 +12,8 @@ ConstraintDistance
 class ConstraintDistance : public Constraint {
 public:
 	ConstraintDistance() : Constraint(),
-		m_cachedLambda( 1 ),
-		m_Jacobian( 1, 12 ) {
+		m_Jacobian( 1, 12 ),
+		m_cachedLambda( 1 ) {
 		m_cachedLambda.Zero();
 		m_baumgarte = 0.0f;
 	}

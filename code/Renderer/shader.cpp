@@ -4,6 +4,7 @@
 #include "shader.h"
 #include "../Fileio.h"
 #include <assert.h>
+#include <stdio.h>
 
 #include "model.h"
 
@@ -54,7 +55,7 @@ bool Shader::Load( DeviceContext * device, const char * name ) {
 
 		// Try loading the spirv code first
 		char nameSpirv[ 1024 ];
-		sprintf_s( nameSpirv, 1024, "data/shaders/spirv/%s.%s.spirv", name, fileExtensions[ i ] );
+		snprintf( nameSpirv, 1024, "data/shaders/spirv/%s.%s.spirv", name, fileExtensions[ i ] );
 		if ( GetFileData( nameSpirv, &code, size ) ) {
 			m_vkShaderModules[ i ] = Shader::CreateShaderModule( device->m_vkDevice, (char*)code, size );
 			continue;

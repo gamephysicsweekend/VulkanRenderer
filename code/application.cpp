@@ -20,11 +20,15 @@
 Application * g_application = NULL;
 
 #include <time.h>
-#include <windows.h>
 
-static bool gIsInitialized( false );
-static unsigned __int64 gTicksPerSecond;
-static unsigned __int64 gStartTicks;
+#if defined( _WIN32 )
+	#include <windows.h>
+#elif defined( __linux__ ) || defined( __APPLE__ )
+	#include <unistd.h>
+	#include <sys/time.h>
+#else
+	#error "Add platform specific code to get time in microseconds"
+#endif
 
 /*
 ====================================
@@ -32,6 +36,10 @@ GetTimeSeconds
 ====================================
 */
 int GetTimeMicroseconds() {
+#if defined( _WIN32 )
+	static bool gIsInitialized( false );
+	static unsigned __int64 gTicksPerSecond;
+	static unsigned __int64 gStartTicks;
 	if ( false == gIsInitialized ) {
 		gIsInitialized = true;
 
@@ -51,6 +59,13 @@ int GetTimeMicroseconds() {
 
 	const unsigned __int64 timeMicro = (unsigned __int64)( (double)( tick - gStartTicks ) / ticks_per_micro );
 	return (int)timeMicro;
+#elif defined( __linux__ ) || defined( __APPLE__ )
+	struct timeval tv;
+	gettimeofday( &tv, NULL );
+	return (int)( tv.tv_sec * 1000000 + tv.tv_usec );
+#else
+	#error "Add platform specific code to get time in microseconds"
+#endif
 }
 
 /*
@@ -77,7 +92,7 @@ void Application::Initialize() {
 	m_scene->Reset();
 
 	m_models.reserve( m_scene->m_bodies.size() );
-	for ( int i = 0; i < m_scene->m_bodies.size(); i++ ) {
+	for ( size_t i = 0; i < m_scene->m_bodies.size(); i++ ) {
 		Model * model = new Model();
 		model->BuildFromShape( m_scene->m_bodies[ i ].m_shape );
 		model->MakeVBO( &m_deviceContext );
@@ -228,7 +243,7 @@ bool Application::InitializeVulkan() {
 	{
 		bool result;
 		FillFullScreenQuad( m_modelFullScreen );
-		for ( int i = 0; i < m_modelFullScreen.m_vertices.size(); i++ ) {
+		for ( size_t i = 0; i < m_modelFullScreen.m_vertices.size(); i++ ) {
 			m_modelFullScreen.m_vertices[ i ].xyz[ 1 ] *= -1.0f;
 		}
 		m_modelFullScreen.MakeVBO( &m_deviceContext );
@@ -251,8 +266,7 @@ bool Application::InitializeVulkan() {
 			return false;
 		}
 
-		Pipeline::CreateParms_t pipelineParms;
-		memset( &pipelineParms, 0, sizeof( pipelineParms ) );
+		Pipeline::CreateParms_t pipelineParms = {};
 		pipelineParms.renderPass = m_deviceContext.m_swapChain.m_vkRenderPass;
 		pipelineParms.descriptors = &m_copyDescriptors;
 		pipelineParms.shader = &m_copyShader;
@@ -290,7 +304,7 @@ void Application::Cleanup() {
 	m_scene = NULL;
 
 	// Delete models
-	for ( int i = 0; i < m_models.size(); i++ ) {
+	for ( size_t i = 0; i < m_models.size(); i++ ) {
 		m_models[ i ]->Cleanup( m_deviceContext );
 		delete m_models[ i ];
 	}
@@ -339,8 +353,7 @@ void Application::ResizeWindow( int windowWidth, int windowHeight ) {
 		bool result;
 		m_copyPipeline.Cleanup( &m_deviceContext );
 
-		Pipeline::CreateParms_t pipelineParms;
-		memset( &pipelineParms, 0, sizeof( pipelineParms ) );
+		Pipeline::CreateParms_t pipelineParms = {};
 		pipelineParms.renderPass = m_deviceContext.m_swapChain.m_vkRenderPass;
 		pipelineParms.descriptors = &m_copyDescriptors;
 		pipelineParms.shader = &m_copyShader;
@@ -450,6 +463,8 @@ void Application::MainLoop() {
 	static float avgTime = 0.0f;
 	static float maxTime = 0.0f;
 
+	timeLastFrame = GetTimeMicroseconds();
+
 	while ( !glfwWindowShouldClose( m_glfwWindow ) ) {
 		int time					= GetTimeMicroseconds();
 		float dt_us					= (float)time - (float)timeLastFrame;
@@ -519,8 +534,6 @@ void Application::UpdateUniforms() {
 	m_renderModels.clear();
 
 	uint32_t uboByteOffset = 0;
-	uint32_t cameraByteOFfset = 0;
-	uint32_t shadowByteOffset = 0;
 
 	struct camera_t {
 		Mat4 matView;
@@ -570,8 +583,6 @@ void Application::UpdateUniforms() {
 			// Update the uniform buffer for the camera matrices
 			memcpy( mappedData + uboByteOffset, &camera, sizeof( camera ) );
 
-			cameraByteOFfset = uboByteOffset;
-
 			// update offset into the buffer
 			uboByteOffset += m_deviceContext.GetAligendUniformByteOffset( sizeof( camera ) );
 		}
@@ -588,8 +599,6 @@ void Application::UpdateUniforms() {
 			camUp.Normalize();
 
 			extern FrameBuffer g_shadowFrameBuffer;
-			const int windowWidth = g_shadowFrameBuffer.m_parms.width;
-			const int windowHeight = g_shadowFrameBuffer.m_parms.height;
 
 			const float halfWidth = 60.0f;
 			const float xmin	= -halfWidth;
@@ -607,8 +616,6 @@ void Application::UpdateUniforms() {
 			// Update the uniform buffer for the camera matrices
 			memcpy( mappedData + uboByteOffset, &camera, sizeof( camera ) );
 
-			shadowByteOffset = uboByteOffset;
-
 			// update offset into the buffer
 			uboByteOffset += m_deviceContext.GetAligendUniformByteOffset( sizeof( camera ) );
 		}
@@ -616,7 +623,7 @@ void Application::UpdateUniforms() {
 		//
 		//	Update the uniform buffer with the body positions/orientations
 		//
-		for ( int i = 0; i < m_scene->m_bodies.size(); i++ ) {
+		for ( size_t i = 0; i < m_scene->m_bodies.size(); i++ ) {
 			Body & body = m_scene->m_bodies[ i ];
 
 			Vec3 fwd = body.m_orientation.RotatePoint( Vec3( 1, 0, 0 ) );

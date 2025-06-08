@@ -8,6 +8,7 @@ class DeviceContext;
 class Buffer;
 class Pipeline;
 class Image;
+class Descriptors;
 struct RenderModel;
 
 /*

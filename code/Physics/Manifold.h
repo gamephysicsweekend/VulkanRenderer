@@ -29,10 +29,10 @@ private:
 	static const int MAX_CONTACTS = 4;
 	contact_t m_contacts[ MAX_CONTACTS ];
 
-	int m_numContacts;
-
 	Body * m_bodyA;
 	Body * m_bodyB;
+
+	int m_numContacts;
 
 	ConstraintPenetration m_constraints[ MAX_CONTACTS ];
 

@@ -20,7 +20,7 @@ Scene::~Scene
 ====================================================
 */
 Scene::~Scene() {
-	for ( int i = 0; i < m_bodies.size(); i++ ) {
+	for ( size_t i = 0; i < m_bodies.size(); i++ ) {
 		delete m_bodies[ i ].m_shape;
 	}
 	m_bodies.clear();
@@ -32,7 +32,7 @@ Scene::Reset
 ====================================================
 */
 void Scene::Reset() {
-	for ( int i = 0; i < m_bodies.size(); i++ ) {
+	for ( size_t i = 0; i < m_bodies.size(); i++ ) {
 		delete m_bodies[ i ].m_shape;
 	}
 	m_bodies.clear();

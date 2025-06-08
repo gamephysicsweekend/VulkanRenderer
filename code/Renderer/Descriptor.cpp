@@ -68,7 +68,6 @@ bool Descriptors::Create( DeviceContext * device, const CreateParms_t & parms ) 
 
 	int idx = 0;
 
-	const int numVertexUniforms = parms.numUniformsVertex;
 	for ( int i = 0; i < parms.numUniformsVertex; i++ ) {
 		uniformBindings[ idx ].binding = idx;
 		uniformBindings[ idx ].descriptorCount = 1;

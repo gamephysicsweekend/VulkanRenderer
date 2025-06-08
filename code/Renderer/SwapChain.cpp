@@ -5,6 +5,8 @@
 #include "DeviceContext.h"
 #include "../Fileio.h"
 #include <assert.h>
+#include <limits>
+#include <stdio.h>
 
 /*
 ====================================================
@@ -37,7 +39,7 @@ void SwapChain::Cleanup( DeviceContext * device ) {
 	vkFreeMemory( device->m_vkDevice, m_vkDepthImageMemory, nullptr );
 
 	// frame buffer
-	for ( int i = 0; i < m_vkFramebuffers.size(); i++ ) {
+	for ( size_t i = 0; i < m_vkFramebuffers.size(); i++ ) {
 		vkDestroyFramebuffer( device->m_vkDevice, m_vkFramebuffers[ i ], nullptr );
 	}
 
@@ -45,7 +47,7 @@ void SwapChain::Cleanup( DeviceContext * device ) {
 	vkDestroyRenderPass( device->m_vkDevice, m_vkRenderPass, nullptr );
 
 	// color buffers
-	for ( int i = 0; i < m_vkImageViews.size(); i++ ) {
+	for ( size_t i = 0; i < m_vkImageViews.size(); i++ ) {
 		vkDestroyImageView( device->m_vkDevice, m_vkImageViews[ i ], nullptr );
 	}
 
@@ -101,7 +103,7 @@ bool SwapChain::Create( DeviceContext * device, int width, int height ) {
 		surfaceFormat.colorSpace = VK_COLOR_SPACE_SRGB_NONLINEAR_KHR;
 
 		VkPresentModeKHR presentMode = VK_PRESENT_MODE_FIFO_KHR;
-		for ( int i = 0; i < physicalDeviceInfo.m_vkPresentModes.size(); i++ ) {
+		for ( size_t i = 0; i < physicalDeviceInfo.m_vkPresentModes.size(); i++ ) {
 			if ( VK_PRESENT_MODE_MAILBOX_KHR == physicalDeviceInfo.m_vkPresentModes[ i ] ) {
 				presentMode = VK_PRESENT_MODE_MAILBOX_KHR;
 				break;

@@ -4,6 +4,7 @@
 #include "Samplers.h"
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
 
 VkSampler Samplers::m_samplerStandard;
 VkSampler Samplers::m_samplerDepth;

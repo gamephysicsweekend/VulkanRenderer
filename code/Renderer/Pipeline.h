@@ -3,6 +3,7 @@
 //
 #pragma once
 #include <vulkan/vulkan.h>
+#include <string.h>
 #include "Descriptor.h"
 #include "Buffer.h"
 

@@ -7,8 +7,16 @@
 #include <assert.h>
 #include <string.h>
 
-#include <direct.h>
-#define GetCurrentDir _getcwd
+#if defined(_WIN32)
+	#include <direct.h>
+	#define GetCurrentDir _getcwd
+#elif defined(__linux__) || defined(__APPLE__)
+	#include <unistd.h>
+	#define GetCurrentDir getcwd
+#else
+	#error "Add platform specific code to get current working directory"
+#endif
+
 
 static char g_ApplicationDirectory[ FILENAME_MAX ];
 static bool g_WasInitialized = false;
@@ -53,12 +61,13 @@ Opens the file and stores it in data
 bool GetFileData( const char * fileNameLocal, unsigned char ** data, unsigned int & size ) {
 	InitializeFileSystem();
 
-	char fileName[ 2048 ];
-	sprintf( fileName, "%s/%s", g_ApplicationDirectory, fileNameLocal );
-	
+	char fileName[ FILENAME_MAX ];
+	int written = snprintf( fileName, sizeof(fileName), "%s/%s", g_ApplicationDirectory, fileNameLocal );
+	assert( written < FILENAME_MAX );
+
 	// open file for reading
 	FILE * file = fopen( fileName, "rb" );
-	
+
 	// handle any errors
 	if ( file == NULL ) {
 		return false;
@@ -114,8 +123,9 @@ SaveFileData
 bool SaveFileData( const char * fileNameLocal, const void * data, unsigned int size ) {
 	InitializeFileSystem();
 
-	char fileName[ 2048 ];
-	sprintf( fileName, "%s/%s", g_ApplicationDirectory, fileNameLocal );
+	char fileName[ FILENAME_MAX ];
+	int written = snprintf( fileName, FILENAME_MAX, "%s/%s", g_ApplicationDirectory, fileNameLocal );
+	assert( written < FILENAME_MAX );
 
 	// open file for writing
 	FILE * file = fopen( fileName, "wb" );

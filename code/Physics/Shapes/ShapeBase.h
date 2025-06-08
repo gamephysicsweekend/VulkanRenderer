@@ -15,6 +15,8 @@ Shape
 */
 class Shape {
 public:
+	virtual ~Shape() = default;
+
 	virtual Mat3 InertiaTensor() const = 0;
 
 	virtual Bounds GetBounds( const Vec3 & pos, const Quat & orient ) const = 0;
